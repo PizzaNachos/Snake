@@ -40,6 +40,7 @@ void eat(Position *player, Apple *apple, int boardSize);
 bool isAlive(Position *playerPointer);
 void title();
 void isWin(Position *playerPointer);
+void credits();
 
 int main()
 {
@@ -52,14 +53,14 @@ int main()
 		player.x[i] = '\0';
 		player.y[i] = '\0';
 	}
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		player.dx[i] = '\0';
 		player.dy[i] = '\0';
 	}
 
-	player.x[0] = 1;
-	player.y[0] = 1;
+	player.x[0] = 10;
+	player.y[0] = 10;
 	player.dx[0] = 0;
 	player.dy[0] = 0;
 
@@ -71,6 +72,7 @@ int main()
 	appleUpdate(applePosPointer, boardSize);
 
 	title();
+
 	while (isAlive(playerPointer))
 	{
 		Sleep(100);
@@ -78,6 +80,9 @@ int main()
 		eat(playerPointer, applePosPointer, boardSize);
 		isWin(playerPointer);
 	}
+
+	credits();
+
 	return 0;
 }
 
@@ -101,6 +106,14 @@ void title()
 	int x;
 	scanf_s("%i", &x);
 }
+void credits()
+{
+	for (int i = 0; i < 50; i++)
+	{
+		printf("You Lose\n");
+	}
+	Sleep(5000);
+}
 
 bool isAlive(Position *playerPointer)
 {
@@ -112,29 +125,19 @@ bool isAlive(Position *playerPointer)
 		{
 			xSame = true;
 		}
-		else
-		{
-			xSame = false;
-		}
 		if ((*playerPointer).y[0] == (*playerPointer).y[i])
 		{
 			ySame = true;
 		}
-		else
+
+		if (xSame == true && ySame == true)
 		{
-			ySame = false;
+			return false;
 		}
 	}
-	if (xSame && ySame)
-	{
-		return 0;
-	}
-	else
-	{
-		return 1;
-	}
-}
 
+	return true;
+}
 void eat(Position *player, Apple *apple, int boardSize)
 {
 	if (((*player).x[0] == (*apple).applePosX) && ((*player).y[0] == (*apple).applePosY))
